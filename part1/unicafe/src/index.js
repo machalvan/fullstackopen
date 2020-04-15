@@ -8,7 +8,7 @@ const Button = ({text, onClick}) => <button onClick={onClick}>{text}</button>
 const Statistic = ({text, value}) => <div>{text} {value}</div>
 
 const Statistics = ({good, neutral, bad, all, average, positive}) => (
-  good || neutral || bad ? (
+  all ? (
     <>
       <Statistic text="good" value={good} />
       <Statistic text="neutral" value={neutral} />
