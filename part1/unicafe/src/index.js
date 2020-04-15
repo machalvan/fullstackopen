@@ -5,15 +5,17 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button = ({text, onClick}) => <button onClick={onClick}>{text}</button>
 
+const Statistic = ({text, value}) => <div>{text} {value}</div>
+
 const Statistics = ({good, neutral, bad, all, average, positive}) => (
   good || neutral || bad ? (
     <>
-      <div>good {good}</div>
-      <div>neutral {neutral}</div>
-      <div>bad {bad}</div>
-      <div>all {all}</div>
-      <div>average {average}</div>
-      <div>positive {positive} %</div>
+      <Statistic text="good" value={good} />
+      <Statistic text="neutral" value={neutral} />
+      <Statistic text="bad" value={bad} />
+      <Statistic text="all" value={all} />
+      <Statistic text="average" value={average} />
+      <Statistic text="positive" value={positive + ' %'} />
     </>
   ) : <div>No feedback given</div>
 )
