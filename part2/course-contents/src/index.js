@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Header = ({text}) => <h1>{text}</h1>
+const Header = ({text}) => <h2>{text}</h2>
 
 const Part = ({name, exercises}) => <p>{name} {exercises}</p>
 
@@ -75,6 +75,7 @@ const App = () => {
 
   return (
     <div>
+      <h1>Web development curriculum</h1>
       {courses.map(course => <Course {...course} />)}
     </div>
   )
