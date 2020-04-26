@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
+import axios from "axios";
 
 const PersonForm = ({addPerson, handleNameChange, handleNumberChange}) => (
   <form onSubmit={addPerson}>
@@ -24,9 +25,7 @@ const SubmitButton = ({text}) => (
 const Persons = ({persons}) => persons.map(p => <div key={p.name}>{p.name} {p.number}</div>)
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1234567' }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
@@ -41,6 +40,12 @@ const App = () => {
       alert(`${newName} is already added to phonebook`)
     }
   }
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(res => setPersons(res.data))
+  }, [])
 
   return (
     <div>
