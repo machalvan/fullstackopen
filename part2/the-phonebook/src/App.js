@@ -14,10 +14,10 @@ const SubmitButton = ({text}) => (
   </div>
 )
 
-const PersonForm = ({addPerson, handleNameChange, handleNumberChange, newName, newNumber}) => (
+const PersonForm = ({addPerson, input1, input2}) => (
   <form onSubmit={addPerson}>
-    <Input label="name: " value={newName} onChange={handleNameChange} />
-    <Input label="number: " value={newNumber} onChange={handleNumberChange} />
+    <Input {...input1} />
+    <Input {...input2} />
     <SubmitButton text="add" />
   </form>
 )
@@ -47,6 +47,12 @@ const App = () => {
     }
   }
 
+  const personFormProps = {
+    addPerson,
+    input1: { label: "name: ", value: newName, onChange: handleNameChange},
+    input2: { label: "number: ", value: newNumber, onChange: handleNumberChange}
+  }
+
   useEffect(() => {
     personService
       .getAll()
@@ -56,7 +62,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <PersonForm {...{addPerson, handleNameChange, handleNumberChange, newName, newNumber}} />
+      <PersonForm {...personFormProps} />
       <h2>Numbers</h2>
       <Persons persons={persons} />
     </div>
