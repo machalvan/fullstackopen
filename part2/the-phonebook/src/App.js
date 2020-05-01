@@ -14,43 +14,59 @@ const SubmitButton = ({text}) => (
   </div>
 )
 
-const PersonForm = ({addPerson, input1, input2}) => (
-  <form onSubmit={addPerson}>
+const PersonForm = ({handleSubmit, input1, input2}) => (
+  <form onSubmit={handleSubmit}>
     <Input {...input1} />
     <Input {...input2} />
     <SubmitButton text="add" />
   </form>
 )
 
-const Persons = ({persons}) => persons.map(({name, number}) => <div key={name}>{name} {number}</div>)
+const Persons = ({persons, deletePerson}) => persons.map(person => (
+  <div key={person.name}>
+    {person.name} {person.number} <button onClick={() => deletePerson(person)}>delete</button>
+  </div>
+))
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-
   const handleNameChange = (event) => setNewName(event.target.value)
   const handleNumberChange = (event) => setNewNumber(event.target.value)
+  const input1 = { label: "name: ", value: newName, onChange: handleNameChange}
+  const input2 = { label: "number: ", value: newNumber, onChange: handleNumberChange}
+  const getPerson = (name) => persons.find(p => p.name === name)
 
-  const addPerson = (event) => {
-    event.preventDefault()
-    if (!persons.find(({name}) => name === newName)) {
+  const resetFields = () => {
+    setNewName('')
+    setNewNumber('')
+  }
+
+  const addPerson = () => {
+    if (!getPerson(newName)) {
       personService
         .create({name: newName, number: newNumber})
-        .then(newPerson =>  {
+        .then(newPerson => {
           setPersons(persons.concat(newPerson));
-          setNewName('')
-          setNewNumber('')
+          resetFields()
         })
     } else {
       alert(`${newName} is already added to phonebook`)
     }
   }
 
-  const personFormProps = {
-    addPerson,
-    input1: { label: "name: ", value: newName, onChange: handleNameChange},
-    input2: { label: "number: ", value: newNumber, onChange: handleNumberChange}
+  const deletePerson = ({id, name}) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      personService
+        .remove(id)
+        .then(() => setPersons(persons.filter(p => p.id !== id)))
+    }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    addPerson()
   }
 
   useEffect(() => {
@@ -62,9 +78,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <PersonForm {...personFormProps} />
+      <PersonForm {...{handleSubmit, input1, input2}} />
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <Persons {...{persons, deletePerson}} />
     </div>
   )
 }
