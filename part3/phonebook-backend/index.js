@@ -24,10 +24,19 @@ let persons = [
   }
 ]
 
+const info = `
+  <p>Phonebook has info for ${persons.length} people</p>
+  <p>${new Date()}</p>
+`
+
 app.use(express.json())
 
 app.get('/api/persons', (req, res) => {
   res.json(persons)
+})
+
+app.get('/info', (req, res) => {
+  res.send(info)
 })
 
 const port = 3001
