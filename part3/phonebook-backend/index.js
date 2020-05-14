@@ -24,7 +24,7 @@ let persons = [
   }
 ]
 
-const info = `
+const infoPage = `
   <p>Phonebook has info for ${persons.length} people</p>
   <p>${new Date()}</p>
 `
@@ -35,8 +35,13 @@ app.get('/api/persons', (req, res) => {
   res.json(persons)
 })
 
+app.get('/api/persons/:id', (req, res) => {
+  const person = persons.find(person => person.id == req.params.id)
+  person ? res.json(person) : res.status(404).end()
+})
+
 app.get('/info', (req, res) => {
-  res.send(info)
+  res.send(infoPage)
 })
 
 const port = 3001
