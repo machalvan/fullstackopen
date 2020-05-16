@@ -29,6 +29,11 @@ const infoPage = `
   <p>${new Date()}</p>
 `
 
+const generateId = () => {
+  const max = 1_000_000_000
+  return Math.floor(Math.random() * max)
+}
+
 app.use(express.json())
 
 app.get('/api/persons', (req, res) => {
@@ -42,6 +47,23 @@ app.get('/api/persons/:id', (req, res) => {
 
 app.get('/info', (req, res) => {
   res.send(infoPage)
+})
+
+app.post('/api/persons', (req, res) => {
+  const {body} = req
+
+  if (!body.name || !body.number)
+    return res.status(400).json({error: "Content missing"})
+  if (persons.find(person => person.name === body.name))
+    return res.status(409).json({error: "Name must be unique"})
+
+  const person = {
+    ...body,
+    id: generateId()
+  };
+
+  persons.push(person)
+  res.json(person)
 })
 
 app.delete('/api/persons/:id', (req, res) => {
