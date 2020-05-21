@@ -1,5 +1,5 @@
 const express = require('express')
-const app = express()
+const morgan = require('morgan')
 
 let persons = [
   {
@@ -34,7 +34,11 @@ const generateId = () => {
   return Math.floor(Math.random() * max)
 }
 
+const app = express()
+const requestLogger = morgan('tiny')
+
 app.use(express.json())
+app.use(requestLogger)
 
 app.get('/api/persons', (req, res) => {
   res.json(persons)
@@ -51,6 +55,7 @@ app.get('/info', (req, res) => {
 
 app.post('/api/persons', (req, res) => {
   const {body} = req
+  console.log(body);
 
   if (!body.name || !body.number)
     return res.status(400).json({error: "Content missing"})
