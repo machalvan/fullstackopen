@@ -1,6 +1,8 @@
 const express = require('express')
 const morgan = require('morgan')
 
+const PORT = process.env.PORT || 3001
+
 let persons = [
   {
     "name": "Arto Hellas",
@@ -77,6 +79,6 @@ app.delete('/api/persons/:id', (req, res) => {
   res.status(index !== -1 ? 204 : 404).end()
 })
 
-const port = 3001
-app.listen(port)
-console.log(`Server running on port ${port}`)
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
