@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 
 const PORT = process.env.PORT || 3001
 
@@ -41,6 +42,7 @@ const requestLogger = morgan('tiny')
 
 app.use(express.json())
 app.use(requestLogger)
+app.use(cors())
 
 app.get('/api/persons', (req, res) => {
   res.json(persons)
