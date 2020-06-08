@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = process.env.REACT_APP_PERSONS_URL
+const baseUrl = '/api/persons'
 
 const getAll = () => axios
   .get(baseUrl)
@@ -8,10 +8,7 @@ const getAll = () => axios
 
 const create = person => axios
   .post(baseUrl, person)
-  .then(res => {
-    console.log(res.data)
-    return res.data
-  })
+  .then(res => res.data)
 
 const remove = id => axios
   .delete(`${baseUrl}/${id}`)
