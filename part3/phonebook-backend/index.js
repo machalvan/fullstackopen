@@ -41,6 +41,7 @@ const app = express()
 const requestLogger = morgan('tiny')
 
 app.use(express.json())
+app.use(express.static('build'))
 app.use(requestLogger)
 app.use(cors())
 
