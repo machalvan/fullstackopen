@@ -1,0 +1,21 @@
+{
+  "name": "phonebook-backend",
+  "version": "0.1.0",
+  "description": "",
+  "main": "part3/phonebook-backend/index.js",
+  "scripts": {
+    "start": "node part3/phonebook-backend/index.js",
+    "dev": "part3/phonebook-backend/node_modules/.bin/nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marcus Hansson",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
